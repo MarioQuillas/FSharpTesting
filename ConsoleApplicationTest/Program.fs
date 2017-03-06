@@ -4,6 +4,16 @@
 let test x y =
     x+y
 
+open System
+
+let readInput = 
+    let s = Console.ReadLine()
+    match Int32.TryParse(s) with
+    | (true, parsed)  -> Some(parsed)
+    | _ -> None
+
+
+
 [<EntryPoint>]
 let main argv = 
     printfn "%A" argv
