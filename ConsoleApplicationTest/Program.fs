@@ -6,11 +6,14 @@ let test x y =
 
 open System
 
-let readInput = 
+let readInput() = 
     let s = Console.ReadLine()
     match Int32.TryParse(s) with
     | (true, parsed)  -> Some(parsed)
     | _ -> None
+
+let tot = 
+    1+1+1
 
 
 
