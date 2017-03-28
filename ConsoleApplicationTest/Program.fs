@@ -15,6 +15,10 @@ let readInput() =
 let tot = 
     1+1+1
 
+type Tree = 
+    | Node of int*Tree list
+
+
 
 
 [<EntryPoint>]
