@@ -1,23 +1,32 @@
 ﻿// Learn more about F# at http://fsharp.org
 // See the 'F# Tutorial' project for more help.
 
-let test x y =
-    x+y
+//let test x y =
+//    x+y
 
-open System
+//open System
 
-let readInput() = 
-    let s = Console.ReadLine()
-    match Int32.TryParse(s) with
-    | (true, parsed)  -> Some(parsed)
-    | _ -> None
+//let readInput() = 
+//    let s = Console.ReadLine()
+//    match Int32.TryParse(s) with
+//    | (true, parsed)  -> Some(parsed)
+//    | _ -> None
 
-let tot = 
-    1+1+1
+//let tot = 
+//    1+1+1
 
 type Tree = 
     | Node of int*Tree list
 
+//type QueryInfo =
+//    {
+//    Title : string
+//    Check : Client -> bool
+//    Positive : Decision
+//    Negative : Decision}
+//    and Decision =
+//    | Result of string
+//    | Query of QueryInfo
 
 
 
