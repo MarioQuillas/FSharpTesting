@@ -22,14 +22,14 @@ let tryPickReviewByName name =
 
     let reviewOpt = nyt.Results |> Seq.tryFind(fun r ->
         System.String.Equals(r.DisplayTitle, name, System.StringComparison.InvariantCultureIgnoreCase))
+    
+    reviewOpt |> Option.map(fun r ->
+        {
+            Published = r.PublicationDate
+            Summary = r.SummaryShort
+            Link = r.Link.Url
+            LinkText = r.Link.SuggestedLinkText
+        })
 
-    match reviewOpt with
-    | Some r ->
-        Some {
-                Published = r.PublicationDate
-                Summary = r.SummaryShort
-                Link = r.Link.Url
-                LinkText = r.Link.SuggestedLinkText
-            }
-                
-    | None -> None
+tryPickReviewByName "interstellar"
+tryPickReviewByName "interstellar  dsdsd"
