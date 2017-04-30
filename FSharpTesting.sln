@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpFSharpTranslate", "CS
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Tutorial2", "Tutorial2\Tutorial2.fsproj", "{BD2BA63E-155A-484F-9772-69CA4A898789}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MovieNews.Data", "MovieNews.Data\MovieNews.Data.fsproj", "{1731E449-7DA3-40DA-88E6-6459109EEF6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BD2BA63E-155A-484F-9772-69CA4A898789}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD2BA63E-155A-484F-9772-69CA4A898789}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD2BA63E-155A-484F-9772-69CA4A898789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1731E449-7DA3-40DA-88E6-6459109EEF6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1731E449-7DA3-40DA-88E6-6459109EEF6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1731E449-7DA3-40DA-88E6-6459109EEF6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1731E449-7DA3-40DA-88E6-6459109EEF6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
