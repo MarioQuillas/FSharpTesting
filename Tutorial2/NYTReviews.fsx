@@ -14,7 +14,10 @@ let query = "the social network"//"paddington"
 let q = ["api-key", apiKey; "query", query]
 let response = Http.RequestString(baseUrl,q)
 let nyt = NYT.Parse(response)
-for res in nyt.Results do
-    printfn "%s" res.DisplayTitle
 
-//NYT.GetSample()
+let reviewOpt = nyt.Results |> Seq.tryFind(fun r ->
+    System.String.Equals(r.DisplayTitle, query, System.StringComparison.InvariantCultureIgnoreCase))
+
+match reviewOpt with
+| Some r -> printfn "%s" r.Headline
+| None -> printfn "No review"
