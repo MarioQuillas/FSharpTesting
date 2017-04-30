@@ -12,11 +12,24 @@ let detailsUrl id =
 let creditUrl id =
     sprintf "http://api.themoviedb.org/3/movie/%d/credits" id
 
-Http.RequestString(
-    searchUrl,
-    query = ["api_key", apiKey; "query", "Interstellar"],
-    headers = [HttpRequestHeaders.Accept "application/json"]
-    )
+type MovieSearch = JsonProvider<"MovieSearch.json">
+type MovieCast = JsonProvider<"MovieCast.json">
+type MovieDetails = JsonProvider<"MovieDetails.json">
+
+let tryGetMovieId title =
+    let jsonResponse =
+        Http.RequestString(
+            searchUrl,
+            query = ["api_key", apiKey; "query", title],
+            headers = [HttpRequestHeaders.Accept "application/json"])
+    let searchRes = MovieSearch.Parse(jsonResponse)
+    searchRes.Results
+    |> Seq.tryFind(fun res ->
+        res.Title = title)
+    |> Option.map (fun res -> res.Id)
+
+
+
 
 type Search = JsonProvider<"""{"page":1,"results":
 [{"poster_path":"\/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","adult":false,"overview":"Interstellar chronicles the adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.","release_date":"2014-11-05","genre_ids":[12,18,878],"id":157336,"original_title":"Interstellar","original_language":"en","title":"Interstellar","backdrop_path":"\/xu9zaAevzQ5nnrsXN6JcahLnG4i.jpg","popularity":29.468765,"vote_count":8365,"video":false,"vote_average":8},{"poster_path":"\/cjvTebuqD8wmhchHE286ltVcbX6.jpg","adult":false,"overview":"For Millennia the Aliien force has watched and waited, a brooding menace that has now at last decided to take over the Earth. Communications systems worldwide are sent into chaos by a strange atmospheric interference and this has turned into a global phenomenon. A massive spaceship headed towards Earth and smaller spaceships began to cover entire cities around the world. Suddenly, the wonder turns into horror as the spaceships destroy the cities with energy weapons. When the world counterattacks, the alien ships are invincible to military weapons.  The survivors have to use their wits to kill the aliens, or die.","release_date":"2016-05-23","genre_ids":[878],"id":398188,"original_title":"Interstellar Wars","original_language":"en","title":"Interstellar Wars","backdrop_path":"\/yTnHa6lgIv8rNneSNBDkBe8MnZe.jpg","popularity":1.126309,"vote_count":5,"video":false,"vote_average":4.7},{"poster_path":"\/ngAjjio3au5PyuDPbqDPmd8vMzc.jpg","adult":false,"overview":"","release_date":"","genre_ids":[878],"id":439557,"original_title":"Interstellar Wars","original_language":"de","title":"Interstellar Wars","backdrop_path":null,"popularity":1.017611,"vote_count":0,"video":false,"vote_average":0},{"poster_path":"\/xZwUIPqBHyJ2QIfMPANOZ1mAld6.jpg","adult":false,"overview":"Behind the scenes of Christopher Nolan's sci-fi drama, which stars Matthew McConaughey and Anne Hathaway","release_date":"2014-11-05","genre_ids":[99],"id":301959,"original_title":"Interstellar: Nolan's Odyssey","original_language":"en","title":"Interstellar: Nolan's Odyssey","backdrop_path":"\/bT5jpIZE50MI0COE8pOeq0kMpQo.jpg","popularity":1.130174,"vote_count":88,"video":false,"vote_average":7.9},
