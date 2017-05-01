@@ -21,7 +21,11 @@ let tryPickReviewByName name response =
             LinkText = r.Link.SuggestedLinkText
         })
 
-let tryDownloadReviewByName name =
+// at most 5 request per second
+let throttler =
+    Utils.createThrottler 200
+
+let tryDownloadReviewByName name = async {
     let q = ["api-key", apiKey; "query", name]
-    let response = Http.RequestString(baseUrl,q)
-    tryPickReviewByName name response
+    let! response = throttler baseUrl q
+    return tryPickReviewByName name response }
