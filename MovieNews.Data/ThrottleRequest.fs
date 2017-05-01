@@ -8,16 +8,25 @@ type ThrottleMessage =
         Reply : AsyncReplyChannel<string>
     }
 
-let agent = MailboxProcessor<ThrottleMessage>.Start(fun inbox -> 
-    async {
-        while true do
-            let! req = inbox.Receive()
-            let sw = System.Diagnostics.Stopwatch.StartNew()
-            let! res =
-                Http.AsyncRequestString(req.Url, List.ofSeq req.Query)
-            req.Reply.Reply(res)
-            let sleep = delay - (int sw.ElapsedMilliseconds)
-            if sleep > 0 then do! Async.Sleep(sleep)
-    }
-)
+let createThrottler delay =
+    let agent = MailboxProcessor<ThrottleMessage>.Start(fun inbox -> 
+        async {
+            while true do
+                let! req = inbox.Receive()
+                let sw = System.Diagnostics.Stopwatch.StartNew()
+                let! res =
+                    Http.AsyncRequestString(
+                        req.Url, List.ofSeq req.Query,
+                        [HttpRequestHeaders.Accept HttpContentTypes.Json])
+                req.Reply.Reply(res)
+                let sleep = delay - (int sw.ElapsedMilliseconds)
+                if sleep > 0 then do! Async.Sleep(sleep)
+        }
+    )
+
+    let download url query =
+        agent.PostAndAsyncReply(fun reply ->
+            { Url = url; Query = query; Reply = reply})
+    
+    download
 
