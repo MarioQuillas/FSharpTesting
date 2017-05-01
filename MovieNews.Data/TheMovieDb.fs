@@ -16,48 +16,66 @@ let creditUrl id =
 type MovieSearch = JsonProvider<"MovieSearch.json">
 type MovieCast = JsonProvider<"MovieCast.json">
 type MovieDetails = JsonProvider<"MovieDetails.json">
-let tryGetMovieId title =
-    let jsonResponse =
-        Http.RequestString(
-            searchUrl,
-            query = ["api_key", apiKey; "query", title],
-            headers = [HttpRequestHeaders.Accept "application/json"])
-    let searchRes = MovieSearch.Parse(jsonResponse)
-    searchRes.Results
-    |> Seq.tryFind(fun res ->
-        res.Title = title)
-    |> Option.map (fun res -> res.Id)
 
-let getMovieDetails id =
-    let jsonResponse = 
-        Http.RequestString(
-            detailsUrl id,
-            query = ["api_key", apiKey],
-            headers = [HttpRequestHeaders.Accept "application/json"])
+// 20 request per second
+let throttler =
+    Utils.createThrottler 50
+
+let tryGetMovieId title = async {
+    let! jsonResponse =
+        throttler
+            searchUrl
+            ["api_key", apiKey; "query", title]
+    let searchRes = MovieSearch.Parse(jsonResponse)
+    return
+        searchRes.Results
+        |> Seq.tryFind(fun res ->
+            res.Title = title)
+        |> Option.map (fun res -> res.Id) }
+
+let getMovieDetails id = async  {
+    let! jsonResponse = 
+        throttler
+            (detailsUrl id)
+            ["api_key", apiKey]
+
     let details = MovieDetails.Parse(jsonResponse)
-    {
-        Homepage = details.Homepage
-        Genres = [for g in details.Genres -> g.Name]
-        Overview = details.Overview
-        Companies = 
-            [for p in details.ProductionCompanies -> p.Name]
-        Poster = details.PosterPath
-        Countries = 
-            [for c in details.ProductionCompanies -> c.Name]
-        Released = details.ReleaseDate
-        AverageVote = details.VoteAverage
+    return
+        {
+            Homepage = details.Homepage
+            Genres = [for g in details.Genres -> g.Name]
+            Overview = details.Overview
+            Companies = 
+                [for p in details.ProductionCompanies -> p.Name]
+            Poster = details.PosterPath
+            Countries = 
+                [for c in details.ProductionCompanies -> c.Name]
+            Released = details.ReleaseDate
+            AverageVote = details.VoteAverage
+        }
     }
 
-let getMovieCast id=
-    let jsonResponse = 
-        Http.RequestString(
-            creditUrl id,
-            query = ["api_key", apiKey],
-            headers = [HttpRequestHeaders.Accept "application/json"])
+let getMovieCast id = async {
+    let! jsonResponse = 
+        throttler
+            (creditUrl id)
+            ["api_key", apiKey]
     let cast = MovieCast.Parse(jsonResponse)
-    [for c in cast.Cast ->
-        {
-            Actor = c.Name
-            Character = c.Character
-        }
-    ]
+    return
+        [for c in cast.Cast ->
+            {
+                Actor = c.Name
+                Character = c.Character
+            }
+        ] }
+
+let getMovieInfoByName name = async {
+    let! optId = tryGetMovieId name
+    match optId with
+    | None -> return None
+    | Some id ->
+        let! cast = getMovieCast id
+        let! details = getMovieDetails id
+        return Some(details, cast)
+}
+    
