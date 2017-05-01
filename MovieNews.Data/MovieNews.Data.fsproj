@@ -54,6 +54,7 @@
     <None Include="MovieCast.json" />
     <None Include="MovieDetails.json" />
     <None Include="MovieSearch.json" />
+    <Compile Include="ThrottleRequest.fs" />
     <Compile Include="Domain.fs" />
     <Compile Include="Netflix.fs" />
     <Compile Include="NYTReview.fs" />

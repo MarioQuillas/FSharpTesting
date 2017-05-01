@@ -32,8 +32,8 @@ let GetMovieInfo name = async {
                 Cast = cast
                 Review = review
              } |> Some |> MovieSearchResult
-    | _ -> return None |> MovieSearchResult }
+    | _ -> return None |> MovieSearchResult } |> Async.StartAsTask
 
 let GetLatestsMovies() = async {
     let! top100 = Netflix.getTop100()
-    return top100 |> Seq.take 20 }
+    return top100 |> Seq.take 20 } |> Async.StartAsTask
