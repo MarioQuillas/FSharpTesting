@@ -8,9 +8,9 @@ let regexThumb = Regex("<a[^>]*><img src=\"([^\"]*)\".*>(.*)")
 type Netflix = 
     XmlProvider<"http://dvd.netflix.com/Top100RSS">
 
-let getTop100() = 
-    let top = Netflix.GetSample()
-    [
+let parseTop100 response = 
+    let top = Netflix.Parse(response)
+    seq {
         for it in top.Channel.Items ->
             let m = regexThumb.Match(it.Description)
             let descr, thumb = 
@@ -24,6 +24,7 @@ let getTop100() =
                 Summary = descr
                 Thumbnail = thumb
             }
-    ]
+    }
 
-
+let getTop100 () =
+    parseTop100 (Http.RequestString("http://dvd.netflix.com/Top100RSS"))
