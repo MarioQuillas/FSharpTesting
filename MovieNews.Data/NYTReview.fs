@@ -7,9 +7,7 @@ type NYT =
 let baseUrl = "http://api.nytimes.com/svc/movies/v2/reviews/search.json"
 let apiKey = "9b917cfa4dcc4e639256a20c700670be"
 
-let tryPickReviewByName name =
-    let q = ["api-key", apiKey; "query", name]
-    let response = Http.RequestString(baseUrl,q)
+let tryPickReviewByName name response =
     let nyt = NYT.Parse(response)
 
     let reviewOpt = nyt.Results |> Seq.tryFind(fun r ->
@@ -23,4 +21,7 @@ let tryPickReviewByName name =
             LinkText = r.Link.SuggestedLinkText
         })
 
-
+let tryDownloadReviewByName name =
+    let q = ["api-key", apiKey; "query", name]
+    let response = Http.RequestString(baseUrl,q)
+    tryPickReviewByName name response

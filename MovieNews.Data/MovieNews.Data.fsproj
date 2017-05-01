@@ -58,6 +58,7 @@
     <Compile Include="Netflix.fs" />
     <Compile Include="NYTReview.fs" />
     <Compile Include="TheMovieDb.fs" />
+    <Compile Include="Main.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
