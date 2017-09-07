@@ -5,7 +5,8 @@ open System.Text.RegularExpressions
 
 let regexThumb = Regex("<a[^>]*><img src=\"([^\"]*)\".*>(.*)")
 
-// this two doesn't exist but we get an empty value when calling them and not an exception (Option or Maybe)
+// this two doesn't exist but we get an empty value when calling them
+// and not an exception (Option or Maybe)
 //m.Groups.[3].Value
 //let mm = regexThumb.Match("")
 //let ff = mm.Groups.[4].Value
