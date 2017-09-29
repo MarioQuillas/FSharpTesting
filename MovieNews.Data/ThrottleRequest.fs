@@ -18,6 +18,7 @@ let createThrottler delay =
           Http.AsyncRequestString(
             req.Url, List.ofSeq req.Query,
             [HttpRequestHeaders.Accept HttpContentTypes.Json])
+
         req.Reply.Reply(res)
         let sleep = delay - (int sw.ElapsedMilliseconds)
         if sleep > 0 then do! Async.Sleep(sleep)

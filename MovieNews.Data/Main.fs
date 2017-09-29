@@ -32,7 +32,7 @@ let GetMovieInfo name = async {
         Cast = cast
         Review = review
         } |> Some |> MovieSearchResult
-  | _ -> return None |> MovieSearchResult } |> Async.StartAsTask
+  | _ -> return None |> MovieSearchResult } |> Async.StartAsTask //for Task friendly c#
 
 let GetLatestsMovies() = async {
     let! top100 = Netflix.getTop100()
