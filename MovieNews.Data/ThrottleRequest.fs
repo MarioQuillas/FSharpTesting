@@ -1,12 +1,10 @@
 ﻿module MovieNews.Data.Utils
 open FSharp.Data
 
-type ThrottleMessage =
-  {
-    Url : string
-    Query : seq<string*string>
-    Reply : AsyncReplyChannel<string>
-  }
+type ThrottleMessage = {
+  Url : string
+  Query : seq<string*string>
+  Reply : AsyncReplyChannel<string> }
 
 let createThrottler delay =
   let agent = MailboxProcessor<ThrottleMessage>.Start(fun inbox -> 
@@ -21,13 +19,17 @@ let createThrottler delay =
 
         req.Reply.Reply(res)
         let sleep = delay - (int sw.ElapsedMilliseconds)
-        if sleep > 0 then do! Async.Sleep(sleep)
-    }
+        if sleep > 0 then do! Async.Sleep(sleep) }
   )
 
   let download url query =
-    agent.PostAndAsyncReply(fun reply ->
-      { Url = url; Query = query; Reply = reply})
-    
+    agent.PostAndAsyncReply(
+      fun reply -> 
+        {
+          Url = url; 
+          Query = query; 
+          Reply = reply
+        } )
+
   download
 
