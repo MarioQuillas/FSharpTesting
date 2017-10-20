@@ -23,13 +23,12 @@ let createThrottler delay =
   )
 
   let download url query =
-    agent.PostAndAsyncReply(
-      fun reply -> 
-        {
-          Url = url; 
-          Query = query; 
-          Reply = reply
-        } )
+    agent.PostAndAsyncReply(fun reply -> 
+      {
+        Url = url; 
+        Query = query; 
+        Reply = reply
+      })
 
   download
 

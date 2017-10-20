@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26424.2
+VisualStudioVersion = 15.0.27009.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ConsoleApplicationTest", "ConsoleApplicationTest\ConsoleApplicationTest.fsproj", "{7D7380E1-7DB3-4D42-B676-160907422CEC}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieNews.Tests", "MovieNews.Tests\MovieNews.Tests.csproj", "{9C2A2B85-4036-4B22-8F50-4588CC50CD03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieNews.Console", "MovieNews.Console\MovieNews.Console.csproj", "{6FD63C48-2DE7-48CE-96B8-7901C5972AA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieNews.Web", "MovieNews.Web\MovieNews.Web.csproj", "{5F37FD62-0E31-4D97-AB73-3BBA4F9AA588}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,8 +47,15 @@ Global
 		{6FD63C48-2DE7-48CE-96B8-7901C5972AA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FD63C48-2DE7-48CE-96B8-7901C5972AA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FD63C48-2DE7-48CE-96B8-7901C5972AA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F37FD62-0E31-4D97-AB73-3BBA4F9AA588}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F37FD62-0E31-4D97-AB73-3BBA4F9AA588}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F37FD62-0E31-4D97-AB73-3BBA4F9AA588}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F37FD62-0E31-4D97-AB73-3BBA4F9AA588}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {17D94B80-3E08-43FE-A1B2-7A79B9722EBE}
 	EndGlobalSection
 EndGlobal
